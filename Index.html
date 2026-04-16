@@ -1,326 +1,112 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulado: Análise do Comportamento</title>
+    <title>Simulado: Psicologia Escolar e Educacional</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
-            margin: 0;
-            padding: 15px;
-            display: flex;
-            justify-content: center;
-        }
-        #quiz-container {
-            background-color: white;
-            width: 100%;
-            max-width: 500px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            padding: 20px;
-        }
-        h1 { font-size: 1.4rem; color: #1a73e8; text-align: center; }
-        .progress { font-size: 0.9rem; color: #666; margin-bottom: 15px; }
-        .question { font-weight: 600; font-size: 1.1rem; margin-bottom: 20px; color: #333; line-height: 1.4; }
-        .options { display: flex; flex-direction: column; gap: 10px; }
-        .option {
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 1rem;
-            background: #fafafa;
-        }
-        .option:active { transform: scale(0.98); }
-        .correct { background-color: #d4edda !important; border-color: #28a745 !important; color: #155724; }
-        .incorrect { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #721c24; }
-        #feedback { margin-top: 15px; font-weight: bold; text-align: center; display: none; }
-        #next-btn, #restart-btn {
-            margin-top: 20px;
-            width: 100%;
-            padding: 15px;
-            background-color: #1a73e8;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: bold;
-            display: none;
-            cursor: pointer;
-        }
-        #result-screen { text-align: center; display: none; }
-        .score-val { font-size: 2.5rem; color: #1a73e8; display: block; margin: 10px 0; }
+        body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: 20px auto; padding: 20px; background-color: #f4f4f9; }
+        .container { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .question { margin-bottom: 25px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+        .options { list-style: none; padding: 0; }
+        .options li { margin: 10px 0; }
+        button { background: #3498db; color: white; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        button:hover { background: #2980b9; }
+        #result { margin-top: 20px; font-weight: bold; font-size: 20px; display: none; padding: 15px; border-radius: 5px; }
+        .correct { color: #27ae60; background: #e8f5e9; }
+        .incorrect { color: #c0392b; background: #ffebee; }
+        .explanation { font-size: 0.9em; color: #555; margin-top: 10px; display: none; }
     </style>
 </head>
 <body>
 
-<div id="quiz-container">
-    <div id="quiz-content">
-        <h1>Simulado Prova Psicologia</h1>
-        <div class="progress" id="progress">Questão 1 de 30</div>
-        <div class="question" id="question-text">Carregando pergunta...</div>
-        <div class="options" id="options-container"></div>
-        <div id="feedback"></div>
-        <button id="next-btn">Próxima Questão</button>
-    </div>
+<div class="container">
+    <h1>Simulado de Psicologia Escolar</h1>
+    <p>Baseado no resumo estruturado para prova.</p>
 
-    <div id="result-screen">
-        <h1>Resultado Final</h1>
-        <p>Sua pontuação foi:</p>
-        <span class="score-val" id="score-text">0/30</span>
-        <p id="performance-msg"></p>
-        <button id="restart-btn" style="display: block;">Refazer Simulado</button>
-    </div>
+    <form id="quizForm">
+        <div class="question">
+            <p><strong>1. Sobre a diferenciação entre Psicologia Escolar e Psicologia Educacional, é correto afirmar que:</strong></p>
+            <ul class="options">
+                [span_0](start_span)<li><input type="radio" name="q1" value="a"> A Psicologia Escolar é essencialmente acadêmica, focada em pesquisa[span_0](end_span).</li>
+                [span_1](start_span)<li><input type="radio" name="q1" value="b"> A Psicologia Educacional é a prática profissional direta nas instituições[span_1](end_span).</li>
+                [span_2](start_span)<li><input type="radio" name="q1" value="c"> A Psicologia Escolar é considerada o campo aplicado (prática), enquanto a Educacional foca em pesquisa e ensino[span_2](end_span).</li>
+            </ul>
+            <div class="explanation" id="exp-q1">Correto! [span_3](start_span)A Psicologia Escolar foca na aplicação prática profissional[span_3](end_span).</div>
+        </div>
+
+        <div class="question">
+            <p><strong>2. Na década de 80, a Psicologia Escolar brasileira passou por uma mudança de paradigma significativa. Qual foi essa transição?</strong></p>
+            <ul class="options">
+                [span_4](start_span)<li><input type="radio" name="q2" value="a"> Do modelo pedagógico para o clínico individual focado na patologia[span_4](end_span).</li>
+                [span_5](start_span)<li><input type="radio" name="q2" value="b"> Do enfoque clínico individual para o modelo pedagógico preventivo e sistêmico[span_5](end_span).</li>
+                [span_6](start_span)<li><input type="radio" name="q2" value="c"> Da visão sistêmica para o diagnóstico medicamentoso obrigatório[span_6](end_span).</li>
+            </ul>
+            <div class="explanation" id="exp-q2">Exato. [span_7](start_span)A mudança visou o foco preventivo e sistêmico em vez do clínico individual[span_7](end_span).</div>
+        </div>
+
+        <div class="question">
+            <p><strong>3. Diferencie Dificuldade de Aprendizagem (DA) de Transtorno de Aprendizagem (TA):</strong></p>
+            <ul class="options">
+                [span_8](start_span)[span_9](start_span)<li><input type="radio" name="q3" value="a"> A DA tem origem intrínseca/neurobiológica, enquanto o TA é causado por conflitos familiares[span_8](end_span)[span_9](end_span).</li>
+                [span_10](start_span)<li><input type="radio" name="q3" value="b"> A DA é extrínseca e geralmente transitória; o TA tem base neurobiológica e é uma condição crônica[span_10](end_span).</li>
+                [span_11](start_span)[span_12](start_span)<li><input type="radio" name="q3" value="c"> Ambos são termos sinônimos para o mau desempenho escolar causado por fatores genéticos[span_11](end_span)[span_12](end_span).</li>
+            </ul>
+            <div class="explanation" id="exp-q3">Correto. DA é ligada a fatores externos/pedagógicos; [span_13](start_span)TA é intrínseco e crônico (ex: dislexia)[span_13](end_span).</div>
+        </div>
+
+        <div class="question">
+            <p><strong>4. Segundo os critérios do DSM-5 citados no resumo, a automutilação é caracterizada por:</strong></p>
+            <ul class="options">
+                [span_14](start_span)<li><input type="radio" name="q4" value="a"> Comportamento com intenção suicida clara para resolver conflitos[span_14](end_span).</li>
+                [span_15](start_span)<li><input type="radio" name="q4" value="b"> Ocorrência em 5 ou mais dias no último ano, sem intenção suicida consciente, buscando alívio de sentimentos negativos[span_15](end_span).</li>
+                [span_16](start_span)<li><input type="radio" name="q4" value="c"> Atos esporádicos (1 ou 2 vezes ao ano) sem relação com o estresse emocional[span_16](end_span).</li>
+            </ul>
+            <div class="explanation" id="exp-q4">Isso mesmo. [span_17](start_span)O DSM-5 estabelece a frequência de 5 ou mais dias para alívio emocional[span_17](end_span).</div>
+        </div>
+
+        <div class="question">
+            <p><strong>5. A Lei nº 13.935/2019 representa um marco legal importante por quê?</strong></p>
+            <ul class="options">
+                [span_18](start_span)<li><input type="radio" name="q5" value="a"> Torna facultativa a presença de psicólogos na rede pública de ensino[span_18](end_span).</li>
+                [span_19](start_span)<li><input type="radio" name="q5" value="b"> Proíbe o uso de recursos do Fundeb para o pagamento de assistentes sociais[span_19](end_span).</li>
+                [span_20](start_span)<li><input type="radio" name="q5" value="c"> Estabelece a obrigatoriedade de psicólogos e assistentes sociais nas redes públicas de educação básica[span_20](end_span).</li>
+            </ul>
+            <div class="explanation" id="exp-q5">Correto. [span_21](start_span)A lei torna obrigatória a presença desses profissionais na educação básica[span_21](end_span).</div>
+        </div>
+
+        <button type="button" onclick="calculateScore()">Finalizar Simulado</button>
+    </form>
+
+    <div id="result"></div>
 </div>
 
 <script>
-    const questions = [
-        {
-            q: "Um paciente relata que, após um acidente de carro, seu coração dispara toda vez que ele ouve o som de frenagem brusca, mesmo estando em casa. Esse fenômeno é melhor explicado como:",
-            options: ["Comportamento Operante", "Comportamento Respondente Condicionado", "Reforço Negativo", "Esquema de Razão Variável"],
-            correct: 1
-        },
-        {
-            q: "Uma criança faz birra no supermercado para ganhar um doce. O pai, cansado do barulho, compra o doce e a criança para de gritar. Para o PAI, o comportamento de comprar o doce foi:",
-            options: ["Reforçado positivamente", "Punido positivamente", "Reforçado negativamente (esquiva/fuga)", "Extinto"],
-            correct: 2
-        },
-        {
-            q: "No consultório, um terapeuta percebe que o cliente só fala sobre sentimentos profundos quando o terapeuta balança a cabeça positivamente. O balançar de cabeça funciona como:",
-            options: ["Estímulo Delta (SΔ)", "Estímulo Discriminativo (SD)", "Resposta Respondente", "Punição Negativa"],
-            correct: 1
-        },
-        {
-            q: "Um rato em uma caixa de Skinner recebe água a cada 10 pressões à barra, sem exceção. Qual o esquema de reforçamento?",
-            options: ["Razão Fixa (FR 10)", "Razão Variável (VR 10)", "Intervalo Fixo (FI 10)", "Reforçamento Contínuo (CRF)"],
-            correct: 0
-        },
-        {
-            q: "Um aluno estuda apenas 10 minutos antes da prova para evitar uma nota baixa. O comportamento de 'estudar' nesse contexto é mantido por:",
-            options: ["Reforço Positivo", "Reforço Negativo (Esquiva)", "Punição Positiva", "Punição Negativa"],
-            correct: 1
-        },
-        {
-            q: "A luz vermelha do semáforo indica que, se o motorista acelerar, ele poderá receber uma multa. A luz vermelha, em relação ao comportamento de acelerar e ser multado, é um:",
-            options: ["SD (Estímulo Discriminativo)", "SΔ (Estímulo Delta)", "Reforçador Primário", "Controle de Esquiva"],
-            correct: 0
-        },
-        {
-            q: "Qual esquema de reforçamento produz a maior taxa de resposta e é mais resistente à extinção (ex: máquinas caça-níqueis)?",
-            options: ["Razão Fixa", "Intervalo Fixo", "Razão Variável", "Reforçamento Contínuo"],
-            correct: 2
-        },
-        {
-            q: "Um professor retira o direito do aluno de participar do recreio após ele ter agredido um colega. Esta técnica é chamada de:",
-            options: ["Punição Positiva", "Reforço Negativo", "Punição Negativa (Custo de Resposta)", "Extinção Respondente"],
-            correct: 2
-        },
-        {
-            q: "Quando um comportamento ocorre na presença de estímulos semelhantes ao SD original, chamamos de:",
-            options: ["Treino Discriminativo", "Generalização de Estímulo", "Classe Funcional", "Contingência Tríplice"],
-            correct: 1
-        },
-        {
-            q: "Na contingência tríplice (Tríplice Contingência), os elementos que a compõem são:",
-            options: ["Estímulo, Resposta, Consequência", "Antecedente, Organismo, Ambiente", "Reforço, Punição, Extinção", "Input, Processamento, Output"],
-            correct: 0
-        },
-        {
-            q: "Um indivíduo que aprende a abrir qualquer tipo de porta (maçaneta redonda, de alavanca ou de correr) demonstra que esses objetos pertencem a uma:",
-            options: ["Classe por Semelhança Física", "Classe Funcional de Estímulos", "Generalização Respondente", "Esquema de Intervalo Variável"],
-            correct: 1
-        },
-        {
-            q: "Um funcionário recebe seu salário exatamente no quinto dia útil de cada mês. Este é um exemplo de:",
-            options: ["Intervalo Fixo", "Intervalo Variável", "Razão Fixa", "Razão Variável"],
-            correct: 0
-        },
-        {
-            q: "O comportamento de 'espirrar' ao sentir pimenta no nariz é um exemplo de:",
-            options: ["Comportamento Operante", "Reforço Positivo", "Comportamento Respondente Incondicionado", "Estímulo Discriminativo"],
-            correct: 2
-        },
-        {
-            q: "A diferença fundamental entre Comportamento Respondente e Operante é que:",
-            options: ["O respondente é voluntário e o operante é reflexo.", "O operante é controlado por suas consequências e o respondente por estímulos antecedentes.", "O respondente não envolve o sistema nervoso.", "O operante sempre é reforçado negativamente."],
-            correct: 1
-        },
-        {
-            q: "Se um comportamento deixa de ser reforçado e, como consequência, diminui de frequência até desaparecer, ocorreu:",
-            options: ["Punição Negativa", "Extinção Operante", "Esquecimento", "Saciação"],
-            correct: 1
-        },
-        {
-            q: "Um pescador espera pacientemente pelo peixe. Ele nunca sabe exatamente quanto tempo vai demorar para o peixe morder a isca. Este esquema é:",
-            options: ["Intervalo Variável", "Razão Variável", "Intervalo Fixo", "Razão Fixa"],
-            correct: 0
-        },
-        {
-            q: "No Treino Discriminativo, o comportamento é reforçado em presença de ___ e não é reforçado em presença de ___.",
-            options: ["SΔ / SD", "SD / SΔ", "Punição / Reforço", "Respondente / Operante"],
-            correct: 1
-        },
-        {
-            q: "A 'Punição Positiva' ocorre quando:",
-            options: ["Algo prazeroso é retirado após a resposta.", "Um estímulo aversivo é apresentado após a resposta.", "Um estímulo aversivo é retirado após a resposta.", "O comportamento aumenta de frequência."],
-            correct: 1
-        },
-        {
-            q: "Um adolescente limpa o quarto para parar de ouvir a mãe reclamar. Isso é:",
-            options: ["Punição Negativa", "Reforço Positivo", "Reforço Negativo", "Extinção"],
-            correct: 2
-        },
-        {
-            q: "A característica principal do 'Esquema de Intervalo Fixo' no gráfico é:",
-            options: ["Uma linha reta diagonal constante.", "Uma curva em forma de 'vieira' (scallop).", "Baixa taxa de resposta inicial.", "Extrema resistência à extinção."],
-            correct: 1
-        },
-        {
-            q: "Se um sujeito aprende que 'Cachorro', 'Dog' e 'Perro' referem-se ao mesmo animal, estamos diante de uma:",
-            options: ["Classe de Estímulos por Semelhança", "Classe de Estímulos por Equivalência (Funcional)", "Punição Positiva", "Resposta Reflexa"],
-            correct: 1
-        },
-        {
-            q: "O termo 'Negativo' tanto no Reforço quanto na Punição significa:",
-            options: ["Que o comportamento é ruim.", "Que algo é retirado do ambiente.", "Que o sujeito ficou triste.", "Que a frequência do comportamento diminuiu."],
-            correct: 1
-        },
-        {
-            q: "Ao ensinar uma criança a ler, o professor elogia cada letra correta. Quando ela já lê palavras, ele elogia apenas frases. Este processo de reforçar aproximações sucessivas é:",
-            options: ["Modelagem", "Modelação", "Encadeamento", "Generalização"],
-            correct: 0
-        },
-        {
-            q: "Um Estímulo Delta (SΔ) sinaliza que:",
-            options: ["O reforço está disponível.", "O reforço NÃO está disponível para aquela resposta.", "Ocorrerá uma punição positiva.", "O comportamento deve ser repetido."],
-            correct: 1
-        },
-        {
-            q: "Um motorista que olha o Waze constantemente para ver se há radares está em um esquema de:",
-            options: ["Intervalo Variável", "Razão Fixa", "Reforço Contínuo", "Extinção"],
-            correct: 0
-        },
-        {
-            q: "Dizer 'Por favor' para conseguir um brinquedo é um comportamento operante porque:",
-            options: ["É uma reação automática ao brinquedo.", "Atua no ambiente e gera uma consequência (ganhar o brinquedo).", "É um reflexo condicionado pelo som da voz.", "Ocorre independente da vontade da criança."],
-            correct: 1
-        },
-        {
-            q: "A principal diferença entre Punição e Extinção é:",
-            options: ["A punição remove o reforço, a extinção adiciona dor.", "A punição envolve uma consequência aversiva ou retirada de reforço; a extinção é apenas a suspensão do reforço que mantinha o comportamento.", "Não há diferença.", "A extinção é mais rápida que a punição."],
-            correct: 1
-        },
-        {
-            q: "Um indivíduo que sente náuseas só de sentir o cheiro do hospital onde fez quimioterapia apresenta um:",
-            options: ["Reforço Positivo", "Comportamento Operante Discriminado", "Comportamento Respondente Condicionado", "Esquema de Razão"],
-            correct: 2
-        },
-        {
-            q: "No esquema de Razão Variável (VR), o reforço é entregue:",
-            options: ["Após um tempo fixo.", "Após um número médio de respostas que varia a cada reforço.", "Sempre após a primeira resposta do dia.", "De forma contínua."],
-            correct: 1
-        },
-        {
-            q: "O controle de estímulos refere-se a:",
-            options: ["Como os estímulos antecedentes influenciam a probabilidade da resposta ocorrer.", "Como as punições controlam a sociedade.", "O poder do reforçador sobre o organismo.", "A capacidade de ignorar estímulos irrelevantes."],
-            correct: 0
+    function calculateScore() {
+        const answers = { q1: 'c', q2: 'b', q3: 'b', q4: 'b', q5: 'c' };
+        let score = 0;
+        let total = 5;
+        const form = document.getElementById('quizForm');
+        
+        for (let key in answers) {
+            const selected = form.querySelector(`input[name="${key}"]:checked`);
+            const explanation = document.getElementById(`exp-${key}`);
+            explanation.style.display = 'block';
+            
+            if (selected && selected.value === answers[key]) {
+                score++;
+            }
         }
-    ];
 
-    let currentQuestion = 0;
-    let score = 0;
-    let answered = false;
-
-    const questionText = document.getElementById('question-text');
-    const optionsContainer = document.getElementById('options-container');
-    const progressText = document.getElementById('progress');
-    const nextBtn = document.getElementById('next-btn');
-    const feedback = document.getElementById('feedback');
-    const quizContent = document.getElementById('quiz-content');
-    const resultScreen = document.getElementById('result-screen');
-    const scoreText = document.getElementById('score-text');
-    const restartBtn = document.getElementById('restart-btn');
-
-    function loadQuestion() {
-        answered = false;
-        feedback.style.display = 'none';
-        nextBtn.style.display = 'none';
+        const resultDiv = document.getElementById('result');
+        resultDiv.style.display = 'block';
+        const finalGrade = (score / total) * 10;
         
-        const q = questions[currentQuestion];
-        progressText.innerText = `Questão ${currentQuestion + 1} de ${questions.length}`;
-        questionText.innerText = q.q;
-        
-        optionsContainer.innerHTML = '';
-        q.options.forEach((opt, index) => {
-            const btn = document.createElement('div');
-            btn.classList.add('option');
-            btn.innerText = opt;
-            btn.onclick = () => checkAnswer(index, btn);
-            optionsContainer.appendChild(btn);
-        });
+        resultDiv.className = finalGrade >= 6 ? 'correct' : 'incorrect';
+        resultDiv.innerHTML = `Sua Nota: ${finalGrade.toFixed(1)} / 10.0 <br> ${score} de ${total} acertos.`;
+        window.scrollTo(0, document.body.scrollHeight);
     }
-
-    function checkAnswer(index, btn) {
-        if(answered) return;
-        answered = true;
-        
-        const correctIndex = questions[currentQuestion].correct;
-        const allOptions = document.querySelectorAll('.option');
-        
-        if(index === correctIndex) {
-            btn.classList.add('correct');
-            score++;
-            feedback.innerText = "Correto! ✨";
-            feedback.style.color = "#28a745";
-        } else {
-            btn.classList.add('incorrect');
-            allOptions[correctIndex].classList.add('correct');
-            feedback.innerText = `Incorreto. A resposta certa era: ${questions[currentQuestion].options[correctIndex]}`;
-            feedback.style.color = "#dc3545";
-        }
-        
-        feedback.style.display = 'block';
-        nextBtn.style.display = 'block';
-    }
-
-    nextBtn.onclick = () => {
-        currentQuestion++;
-        if(currentQuestion < questions.length) {
-            loadQuestion();
-        } else {
-            showResults();
-        }
-    };
-
-    function showResults() {
-        quizContent.style.display = 'none';
-        resultScreen.style.display = 'block';
-        scoreText.innerText = `${score} / ${questions.length}`;
-        
-        let msg = "";
-        const percent = (score / questions.length) * 100;
-        if(percent >= 90) msg = "Excelente! Você dominou o comportamento operante!";
-        else if(percent >= 70) msg = "Muito bom! Está pronto para a prova.";
-        else if(percent >= 50) msg = "Bom, mas revise esquemas de reforçamento.";
-        else msg = "Melhor revisar os conceitos fundamentais antes da prova.";
-        
-        document.getElementById('performance-msg').innerText = msg;
-    }
-
-    restartBtn.onclick = () => {
-        currentQuestion = 0;
-        score = 0;
-        quizContent.style.display = 'block';
-        resultScreen.style.display = 'none';
-        loadQuestion();
-    };
-
-    loadQuestion();
 </script>
 
 </body>
 </html>
-
