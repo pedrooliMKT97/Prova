@@ -1,112 +1,300 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Simulado: Psicologia Escolar e Educacional</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado Pro - Psicologia Escolar</title>
     <style>
-        body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: 20px auto; padding: 20px; background-color: #f4f4f9; }
-        .container { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
-        .question { margin-bottom: 25px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
-        .options { list-style: none; padding: 0; }
-        .options li { margin: 10px 0; }
-        button { background: #3498db; color: white; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; font-size: 16px; }
-        button:hover { background: #2980b9; }
-        #result { margin-top: 20px; font-weight: bold; font-size: 20px; display: none; padding: 15px; border-radius: 5px; }
-        .correct { color: #27ae60; background: #e8f5e9; }
-        .incorrect { color: #c0392b; background: #ffebee; }
-        .explanation { font-size: 0.9em; color: #555; margin-top: 10px; display: none; }
+        :root {
+            --primary: #4a90e2;
+            --success: #27ae60;
+            --danger: #e74c3c;
+            --bg: #f0f2f5;
+            --card: #ffffff;
+            --text: #2c3e50;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .quiz-container {
+            background: var(--card);
+            width: 90%;
+            max-width: 600px;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        #progress-container {
+            width: 100%;
+            height: 8px;
+            background: #eee;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        #progress-bar {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .question-wrapper {
+            display: none; /* Escondido por padrão */
+            animation: slideIn 0.5s ease forwards;
+        }
+
+        .question-wrapper.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        h2 { font-size: 1.4rem; margin-bottom: 25px; line-height: 1.4; }
+
+        .options-list { list-style: none; padding: 0; }
+
+        .option-item {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        .option-item:hover {
+            border-color: var(--primary);
+            background: #f0f7ff;
+            transform: translateY(-2px);
+        }
+
+        .option-item.correct {
+            background: #d4edda !important;
+            border-color: var(--success) !important;
+            color: #155724;
+        }
+
+        .option-item.wrong {
+            background: #f8d7da !important;
+            border-color: var(--danger) !important;
+            color: #721c24;
+        }
+
+        #feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .btn-next {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            float: right;
+            margin-top: 20px;
+            display: none;
+        }
+
+        #result-screen {
+            text-align: center;
+            display: none;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 10px solid var(--primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>Simulado de Psicologia Escolar</h1>
-    <p>Baseado no resumo estruturado para prova.</p>
+<div class="quiz-container">
+    <div id="progress-container"><div id="progress-bar"></div></div>
 
-    <form id="quizForm">
-        <div class="question">
-            <p><strong>1. Sobre a diferenciação entre Psicologia Escolar e Psicologia Educacional, é correto afirmar que:</strong></p>
-            <ul class="options">
-                [span_0](start_span)<li><input type="radio" name="q1" value="a"> A Psicologia Escolar é essencialmente acadêmica, focada em pesquisa[span_0](end_span).</li>
-                [span_1](start_span)<li><input type="radio" name="q1" value="b"> A Psicologia Educacional é a prática profissional direta nas instituições[span_1](end_span).</li>
-                [span_2](start_span)<li><input type="radio" name="q1" value="c"> A Psicologia Escolar é considerada o campo aplicado (prática), enquanto a Educacional foca em pesquisa e ensino[span_2](end_span).</li>
-            </ul>
-            <div class="explanation" id="exp-q1">Correto! [span_3](start_span)A Psicologia Escolar foca na aplicação prática profissional[span_3](end_span).</div>
+    <div id="quiz-content">
         </div>
 
-        <div class="question">
-            <p><strong>2. Na década de 80, a Psicologia Escolar brasileira passou por uma mudança de paradigma significativa. Qual foi essa transição?</strong></p>
-            <ul class="options">
-                [span_4](start_span)<li><input type="radio" name="q2" value="a"> Do modelo pedagógico para o clínico individual focado na patologia[span_4](end_span).</li>
-                [span_5](start_span)<li><input type="radio" name="q2" value="b"> Do enfoque clínico individual para o modelo pedagógico preventivo e sistêmico[span_5](end_span).</li>
-                [span_6](start_span)<li><input type="radio" name="q2" value="c"> Da visão sistêmica para o diagnóstico medicamentoso obrigatório[span_6](end_span).</li>
-            </ul>
-            <div class="explanation" id="exp-q2">Exato. [span_7](start_span)A mudança visou o foco preventivo e sistêmico em vez do clínico individual[span_7](end_span).</div>
-        </div>
-
-        <div class="question">
-            <p><strong>3. Diferencie Dificuldade de Aprendizagem (DA) de Transtorno de Aprendizagem (TA):</strong></p>
-            <ul class="options">
-                [span_8](start_span)[span_9](start_span)<li><input type="radio" name="q3" value="a"> A DA tem origem intrínseca/neurobiológica, enquanto o TA é causado por conflitos familiares[span_8](end_span)[span_9](end_span).</li>
-                [span_10](start_span)<li><input type="radio" name="q3" value="b"> A DA é extrínseca e geralmente transitória; o TA tem base neurobiológica e é uma condição crônica[span_10](end_span).</li>
-                [span_11](start_span)[span_12](start_span)<li><input type="radio" name="q3" value="c"> Ambos são termos sinônimos para o mau desempenho escolar causado por fatores genéticos[span_11](end_span)[span_12](end_span).</li>
-            </ul>
-            <div class="explanation" id="exp-q3">Correto. DA é ligada a fatores externos/pedagógicos; [span_13](start_span)TA é intrínseco e crônico (ex: dislexia)[span_13](end_span).</div>
-        </div>
-
-        <div class="question">
-            <p><strong>4. Segundo os critérios do DSM-5 citados no resumo, a automutilação é caracterizada por:</strong></p>
-            <ul class="options">
-                [span_14](start_span)<li><input type="radio" name="q4" value="a"> Comportamento com intenção suicida clara para resolver conflitos[span_14](end_span).</li>
-                [span_15](start_span)<li><input type="radio" name="q4" value="b"> Ocorrência em 5 ou mais dias no último ano, sem intenção suicida consciente, buscando alívio de sentimentos negativos[span_15](end_span).</li>
-                [span_16](start_span)<li><input type="radio" name="q4" value="c"> Atos esporádicos (1 ou 2 vezes ao ano) sem relação com o estresse emocional[span_16](end_span).</li>
-            </ul>
-            <div class="explanation" id="exp-q4">Isso mesmo. [span_17](start_span)O DSM-5 estabelece a frequência de 5 ou mais dias para alívio emocional[span_17](end_span).</div>
-        </div>
-
-        <div class="question">
-            <p><strong>5. A Lei nº 13.935/2019 representa um marco legal importante por quê?</strong></p>
-            <ul class="options">
-                [span_18](start_span)<li><input type="radio" name="q5" value="a"> Torna facultativa a presença de psicólogos na rede pública de ensino[span_18](end_span).</li>
-                [span_19](start_span)<li><input type="radio" name="q5" value="b"> Proíbe o uso de recursos do Fundeb para o pagamento de assistentes sociais[span_19](end_span).</li>
-                [span_20](start_span)<li><input type="radio" name="q5" value="c"> Estabelece a obrigatoriedade de psicólogos e assistentes sociais nas redes públicas de educação básica[span_20](end_span).</li>
-            </ul>
-            <div class="explanation" id="exp-q5">Correto. [span_21](start_span)A lei torna obrigatória a presença desses profissionais na educação básica[span_21](end_span).</div>
-        </div>
-
-        <button type="button" onclick="calculateScore()">Finalizar Simulado</button>
-    </form>
-
-    <div id="result"></div>
+    <div id="result-screen">
+        <h2>Simulado Concluído!</h2>
+        <div class="score-circle" id="final-score">0</div>
+        <p id="result-text"></p>
+        <button class="btn-next" style="display:inline-block; float:none" onclick="location.reload()">Refazer Simulado</button>
+    </div>
 </div>
 
 <script>
-    function calculateScore() {
-        const answers = { q1: 'c', q2: 'b', q3: 'b', q4: 'b', q5: 'c' };
-        let score = 0;
-        let total = 5;
-        const form = document.getElementById('quizForm');
+    const questions = [
+        {
+            q: "1. Sobre a diferenciação entre Psicologia Escolar e Psicologia Educacional, qual a principal distinção?",
+            options: [
+                "A Escolar é focada apenas em pesquisa acadêmica.",
+                "A Educacional é a atuação prática dentro das escolas.",
+                "A Escolar é o campo de atuação profissional, enquanto a Educacional foca na pesquisa e ensino acadêmico."
+            ],
+            correct: 2,
+            ref: "A Psicologia Escolar é considerada aplicada, enquanto a Educacional é acadêmica."
+        },
+        {
+            q: "2. Qual foi a principal mudança de paradigma na Psicologia Escolar brasileira na década de 80?",
+            options: [
+                "Adoção do modelo clínico focado na patologia individual.",
+                "Transição do foco clínico individual para um modelo pedagógico preventivo e sistêmico.",
+                "Abandono das práticas coletivas para focar no diagnóstico médico."
+            ],
+            correct: 1,
+            ref: "Houve uma transição para o modelo preventivo e sistêmico."
+        },
+        {
+            q: "3. Como se diferenciam Dificuldade de Aprendizagem (DA) e Transtorno de Aprendizagem (TA)?",
+            options: [
+                "A DA é intrínseca e o TA é causado por problemas pedagógicos.",
+                "DA tem origem extrínseca (pedagógica/cultural) e é transitória; TA tem base neurobiológica e é crônico.",
+                "Ambos possuem a mesma origem neurobiológica e exigem medicação."
+            ],
+            correct: 1,
+            ref: "A DA é ligada a fatores externos, enquanto o TA é neurobiológico (intrínseco)."
+        },
+        {
+            q: "4. Segundo o DSM-5, qual o critério temporal para caracterizar a Automutilação?",
+            options: [
+                "Ocorrência em pelo menos 10 dias no último mês.",
+                "Ocorrência em 5 ou mais dias no último ano para alívio emocional.",
+                "Qualquer episódio único já é classificado como transtorno crônico."
+            ],
+            correct: 1,
+            ref: "O DSM-5 cita 5 ou mais dias no último ano sem intenção suicida consciente."
+        },
+        {
+            q: "5. O que estabelece a Lei nº 13.935/2019 para as redes públicas de educação?",
+            options: [
+                "A proibição de psicólogos em escolas de ensino fundamental.",
+                "A obrigatoriedade de psicólogos e assistentes sociais nas redes públicas de educação básica.",
+                "A substituição de professores por técnicos em saúde mental."
+            ],
+            correct: 1,
+            ref: "A lei garante esses profissionais nas redes de educação básica."
+        }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = false;
+
+    const quizContent = document.getElementById('quiz-content');
+    const progressBar = document.getElementById('progress-bar');
+
+    function loadQuestion() {
+        answered = false;
+        const qData = questions[currentQuestion];
         
-        for (let key in answers) {
-            const selected = form.querySelector(`input[name="${key}"]:checked`);
-            const explanation = document.getElementById(`exp-${key}`);
-            explanation.style.display = 'block';
-            
-            if (selected && selected.value === answers[key]) {
-                score++;
-            }
+        // Atualiza progresso
+        progressBar.style.width = `${(currentQuestion / questions.length) * 100}%`;
+
+        quizContent.innerHTML = `
+            <div class="question-wrapper active">
+                <h2>${qData.q}</h2>
+                <div class="options-list">
+                    ${qData.options.map((opt, i) => `
+                        <div class="option-item" onclick="checkAnswer(${i}, this)">
+                            ${opt}
+                        </div>
+                    `).join('')}
+                </div>
+                <div id="feedback"></div>
+                <button class="btn-next" id="next-btn" onclick="nextQuestion()">Próxima Questão</button>
+            </div>
+        `;
+    }
+
+    window.checkAnswer = function(index, element) {
+        if (answered) return;
+        answered = true;
+
+        const correct = questions[currentQuestion].correct;
+        const feedback = document.getElementById('feedback');
+        const nextBtn = document.getElementById('next-btn');
+        const allOptions = document.querySelectorAll('.option-item');
+
+        if (index === correct) {
+            element.classList.add('correct');
+            score++;
+            feedback.innerHTML = `<strong>Correto!</strong> ${questions[currentQuestion].ref}`;
+            feedback.style.background = '#e8f5e9';
+            feedback.style.color = '#2e7d32';
+        } else {
+            element.classList.add('wrong');
+            allOptions[correct].classList.add('correct');
+            feedback.innerHTML = `<strong>Incorreto.</strong> A resposta certa é: ${questions[currentQuestion].options[correct]}. <br><small>${questions[currentQuestion].ref}</small>`;
+            feedback.style.background = '#ffebee';
+            feedback.style.color = '#c62828';
         }
 
-        const resultDiv = document.getElementById('result');
-        resultDiv.style.display = 'block';
-        const finalGrade = (score / total) * 10;
-        
-        resultDiv.className = finalGrade >= 6 ? 'correct' : 'incorrect';
-        resultDiv.innerHTML = `Sua Nota: ${finalGrade.toFixed(1)} / 10.0 <br> ${score} de ${total} acertos.`;
-        window.scrollTo(0, document.body.scrollHeight);
+        feedback.style.display = 'block';
+        nextBtn.style.display = 'block';
     }
+
+    window.nextQuestion = function() {
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+            loadQuestion();
+        } else {
+            showResult();
+        }
+    }
+
+    function showResult() {
+        progressBar.style.width = '100%';
+        quizContent.style.display = 'none';
+        const resultScreen = document.getElementById('result-screen');
+        const finalScore = (score / questions.length) * 10;
+        
+        resultScreen.style.display = 'block';
+        document.getElementById('final-score').innerText = finalScore.toFixed(1);
+        document.getElementById('result-text').innerText = finalScore >= 6 ? 
+            "Parabéns! Você está pronto para a prova." : 
+            "Recomenda-se revisar o resumo novamente.";
+    }
+
+    loadQuestion();
 </script>
 
 </body>
 </html>
+
